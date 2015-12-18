@@ -16,9 +16,8 @@ angular.module('auth').service('userService', function($http, $q, $rootScope){
       url: '/api/auth/local',
       data: credentials
     }).then(function(res){
-      console.log('Result from user login', res)
       dfd.resolve(res.data);
-    })
+    });
     return dfd.promise
   }
 
@@ -27,8 +26,8 @@ angular.module('auth').service('userService', function($http, $q, $rootScope){
       method: 'GET',
       url: '/api/auth/logout'
     }).then(function(){
-      //return $state.go('login')
-    })
+      $rootScope.$emit('user-change', null);
+    });
   }
 
   this.getAuthedUser = function(){
@@ -41,9 +40,9 @@ angular.module('auth').service('userService', function($http, $q, $rootScope){
         url: '/api/users/currentUser'
       }).then(function(res){
         user = res.data;
-        console.log('Result getting the logged in user', res);
+        $rootScope.$broadcast('user-change', null);
         dfd.resolve(res.data);
-      })
+      });
     }
     return dfd.promise;
   };
