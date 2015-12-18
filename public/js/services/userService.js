@@ -27,7 +27,6 @@ angular.module('auth').service('userService', function($http, $q, $rootScope){
       method: 'GET',
       url: '/api/auth/logout'
     }).then(function(){
-      $rootScope.$emit('user-change', null);
       //return $state.go('login')
     })
   }
@@ -42,7 +41,6 @@ angular.module('auth').service('userService', function($http, $q, $rootScope){
         url: '/api/users/currentUser'
       }).then(function(res){
         user = res.data;
-        $rootScope.$emit('user-change', null);
         console.log('Result getting the logged in user', res);
         dfd.resolve(res.data);
       })
